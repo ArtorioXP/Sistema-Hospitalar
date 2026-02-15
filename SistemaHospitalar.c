@@ -164,6 +164,17 @@ int pop(Pilha* p, Paciente* paciente) {
     return 1;
 }
 
+void menu() {
+    printf("\n===== SISTEMA HOSPITALAR =====\n");
+    printf("1 - Inserir paciente na fila\n");
+    printf("2 - Atender paciente\n");
+    printf("3 - Mostrar fila de espera\n");
+    printf("4 - Mostrar histórico de atendimentos\n");
+    printf("0 - Sair\n");
+    printf("Escolha: ");
+}
+
+// main
 
 int main() {
     Fila fila;
@@ -172,21 +183,61 @@ int main() {
     Pilha* pilha = inicializaPilha();
     if (pilha == NULL) return 1;
 
-    Paciente p1 = {1, "joseph", 40, EMERGENCIA};
-    Paciente p2 = {2, "arthur", 25, URGENCIA};
-    Paciente p3 = {3, "maria", 30, NORMAL};
+    int op;
+    Paciente p;
 
-    inserirFila(&fila, p1);
-    inserirFila(&fila, p2);
-    inserirFila(&fila, p3);
+    do {
+        menu();
+        scanf("%d", &op);
+        getchar(); // limpa buffer
 
-    imprimirFila(&fila);
+        switch (op) {
+            case 1:
+                printf("ID: ");
+                scanf("%d", &p.id);
+                getchar();
 
-    Paciente atendido = removerFila(&fila);
-    push(pilha, atendido);
+                printf("Nome: ");
+                fgets(p.nome, 50, stdin);
+                p.nome[strcspn(p.nome, "\n")] = '\0';
 
-    imprimirPilha(pilha);
-    imprimirFila(&fila);
+                printf("Idade: ");
+                scanf("%d", &p.idade);
+
+                printf("Prioridade (1-Emergência, 2-Urgência, 3-Normal): ");
+                scanf("%d", &p.prioridade);
+
+                inserirFila(&fila, p);
+                break;
+
+            case 2: {
+                Paciente atendido = removerFila(&fila);
+                if (atendido.id != -1) {
+                    push(pilha, atendido);
+                    printf("Paciente atendido:\n");
+                    imprimirPaciente(atendido);
+                }
+                break;
+            }
+
+            case 3:
+                imprimirFila(&fila);
+                break;
+
+            case 4:
+                imprimirPilha(pilha);
+                break;
+
+            case 0:
+                printf("Encerrando sistema...\n");
+                break;
+
+            default:
+                printf("Opção inválida.\n");
+        }
+
+    } while (op != 0);
 
     return 0;
 }
+
