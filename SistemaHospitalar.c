@@ -45,9 +45,46 @@ void InicializaFila(Fila* fila){
     fila -> fim = NULL;
 }
 // inicializa a pilha
-void InicializaPilha(Pilha* pilha){
-    pilha -> topo = NULL;
+Pilha* InicizalizarPilha(){
+	Pilha* p = (Pilha*) malloc(sizeof(Pilha));
+    if (p == NULL) {
+        printf("Erro de alocação!\n");
+        return NULL;
+    }
+    p->topo = NULL;
+    return p;
 }
+
+/* Funções de impressão */
+
+void imprimirPaciente(Paciente p){
+	printf("ID: %d\n", p.id);
+	printf("NOME: %s\n", p.nome);
+	printf("IDADE: %d\n", p.idade);
+	printf("PRIORIDADE: %d",p.prioridade);
+	printf("\n------ --------- ------\n");
+}
+
+void imprimirPilha(Pilha* p) {
+	
+    printf("--- PILHA DE ATENDIMENTOS ---\n");
+	
+    if (p == NULL || p->topo == NULL) {
+        printf("Pilha vazia.\n");
+        return;
+    }
+
+    NoPilha* atual = p->topo;
+
+    while (atual != NULL) {
+        imprimirPaciente(atual->dados);
+        atual = atual->prox;
+    }
+
+    printf("\n--- -------------------- ---\n");
+}
+
+/* Funções para manipulação da Fila */
 
 void insercaoFila(Fila* fila, Paciente pessoa) {
     No* novoPaciente = (No*) malloc(sizeof(No));
@@ -100,4 +137,37 @@ Paciente removerFila(Fila* fila) {
     free(auxiliar);
 
     return pessoa;
+}
+
+/* Funções para manipulação da Pilha */
+
+void push(Pilha* p, Paciente pessoa) {					
+    NoPilha* novoNo = (NoPilha*) malloc(sizeof(NoPilha));
+    if (novoNo == NULL) {
+        printf("Erro de alocação!\n");
+        return;
+    }
+
+    novoNo->dados = pessoa;
+    novoNo->prox = p->topo;
+    p->topo = novoNo;
+}
+
+int pop(Pilha* p, Paciente* pessoa) {
+    if (p->topo == NULL) {
+        return 0;
+    }
+
+    NoPilha* temp = p->topo;
+    *pessoa = temp->dados;
+    p->topo = temp->prox;
+
+    free(temp);
+    return 1;
+}
+
+int main(){
+	
+    Pilha* pilha = InicizalizarPilha(&pilha);
+    return 0;
 }
