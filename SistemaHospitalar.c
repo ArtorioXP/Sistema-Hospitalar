@@ -172,9 +172,9 @@ int main() {
     Pilha* pilha = inicializaPilha();
     if (pilha == NULL) return 1;
 
-    Paciente p1 = {1, "Maria", 40, EMERGENCIA};
-    Paciente p2 = {2, "João", 25, URGENCIA};
-    Paciente p3 = {3, "Ana", 30, NORMAL};
+    Paciente p1 = {1, "joseph", 40, EMERGENCIA};
+    Paciente p2 = {2, "arthur", 25, URGENCIA};
+    Paciente p3 = {3, "maria", 30, NORMAL};
 
     inserirFila(&fila, p1);
     inserirFila(&fila, p2);
@@ -190,4 +190,3 @@ int main() {
 
     return 0;
 }
-
