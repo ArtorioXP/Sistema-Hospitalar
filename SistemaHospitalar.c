@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
+#include <locale.h>
 
 #define EMERGENCIA 1
 #define URGENCIA   2
@@ -118,6 +119,14 @@ void imprimirPilha(Pilha* p) {
         imprimirPaciente(atual->dados);
         atual = atual->prox;
     }
+}
+
+void limparTela(){
+	#ifdef _WIN32
+		system("cls");
+	#elif __linux__
+		system("clear"); 
+	#endif
 }
 
 /* Funções para manipulação da Fila */
@@ -245,8 +254,9 @@ void menu() {
     printf("\n===== SISTEMA HOSPITALAR =====\n");
     printf("1 - Inserir paciente na fila\n");
     printf("2 - Atender paciente\n");
-    printf("3 - Mostrar fila de espera\n");
-    printf("4 - Mostrar histórico de atendimentos\n");
+    printf("3 - Desfazer atendimento\n");
+    printf("4 - Mostrar fila de espera\n");
+    printf("5 - Mostrar histórico de atendimentos\n");
     printf("0 - Sair\n");
     printf("Escolha: ");
 }
@@ -320,9 +330,33 @@ void cadastrarPaciente(Fila* fila) {
     inserirFila(fila, p);
 }
 
+int desfazerAtendimento(Fila* fila, Pilha* historico) {
+
+    if (historico == NULL || historico->topo == NULL) {
+        printf("Nao ha atendimentos para desfazer.\n");
+        return 0;
+    }
+
+    Paciente pacienteDesfeito;
+
+    if (!pop(historico, &pacienteDesfeito)) {
+        return 0;
+    }
+
+    inserirFila(fila, pacienteDesfeito);
+
+    printf("Atendimento de %s desfeito com sucesso.\n", pacienteDesfeito.nome);
+
+    return 1;
+}
+
+
 // main
 
 int main() {
+	
+	setlocale(LC_ALL, "pt_BR.UTF-8");
+	
     Fila fila;
     inicializaFila(&fila);
 
@@ -349,10 +383,12 @@ int main() {
 
         switch (op) {
             case 1:
+				limparTela();
                 cadastrarPaciente(&fila);
                 break;
 
             case 2: {
+				limparTela();
                 Paciente atendido = removerFila(&fila);
                 if (atendido.id != -1) {
                     push(pilha, atendido);
@@ -363,10 +399,17 @@ int main() {
             }
 
             case 3:
+				limparTela();
+				desfazerAtendimento(&fila,pilha);
+				break;
+
+            case 4:
+				limparTela();
                 imprimirFila(&fila);
                 break;
 
-            case 4:
+            case 5:
+				limparTela();
                 imprimirPilha(pilha);
                 break;
 
