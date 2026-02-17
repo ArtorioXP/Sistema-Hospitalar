@@ -125,7 +125,7 @@ void limparTela(){
 	#ifdef _WIN32
 		system("cls");
 	#elif __linux__
-		system("clear"); 
+		system("clear");
 	#endif
 }
 
@@ -227,7 +227,7 @@ int pop(Pilha* p, Paciente* paciente) {
 /* Funções de limpeza (liberar memória) */
 void destruirFila(Fila* fila) {
     if (fila == NULL) return;
-    
+
     No* atual = fila->inicio;
     while (atual != NULL) {
         No* temp = atual;
@@ -240,7 +240,7 @@ void destruirFila(Fila* fila) {
 
 void destruirPilha(Pilha* p) {
     if (p == NULL) return;
-    
+
     NoPilha* atual = p->topo;
     while (atual != NULL) {
         NoPilha* temp = atual;
@@ -250,13 +250,41 @@ void destruirPilha(Pilha* p) {
     free(p);
 }
 
+// FUNÇÕES DE BUSCA
+Paciente buscarPacientePorID(Fila* fila, int id) {
+    Paciente vazio = {-1, "", 0, PRIORIDADE_INVALIDA};
+
+    No* atual = fila->inicio;
+    while (atual) {
+        if (atual->dados.id == id)
+            return atual->dados;
+        atual = atual->prox;
+    }
+
+    return vazio;
+}
+
+void buscarPaciente(Fila* fila) {
+    int id;
+    printf("\nID do paciente: ");
+    scanf("%d", &id);
+    getchar();
+
+    Paciente p = buscarPacientePorID(fila, id);
+    if (p.id == -1)
+        printf("Paciente não encontrado.\n");
+    else
+        imprimirPaciente(p);
+}
+
 void menu() {
     printf("\n===== SISTEMA HOSPITALAR =====\n");
     printf("1 - Inserir paciente na fila\n");
     printf("2 - Atender paciente\n");
     printf("3 - Desfazer atendimento\n");
-    printf("4 - Mostrar fila de espera\n");
-    printf("5 - Mostrar histórico de atendimentos\n");
+    printf("4 - Buscar paciente por ID\n");
+    printf("5 - Mostrar fila de espera\n");
+    printf("6 - Mostrar histórico de atendimentos\n");
     printf("0 - Sair\n");
     printf("Escolha: ");
 }
@@ -265,20 +293,20 @@ void menu() {
 int lerInteiro(int minimo) {
     int valor;
     int resultado = scanf("%d", &valor);
-    
+
     // Limpa buffer de entrada
     while (getchar() != '\n');
-    
+
     if (resultado != 1) {
         printf("ERRO: Entrada inválida. Digite um número inteiro.\n");
         return -1;
     }
-    
+
     if (valor < minimo) {
         printf("ERRO: Valor deve ser >= %d.\n", minimo);
         return -1;
     }
-    
+
     return valor;
 }
 
@@ -295,14 +323,14 @@ void lerString(char* buffer, int tamanho) {
 // Função para cadastrar um novo paciente
 void cadastrarPaciente(Fila* fila) {
     Paciente p;
-    
+
     printf("\n=== CADASTRO DE PACIENTE ===\n");
-    
+
     // Ler ID
     printf("ID do paciente: ");
     p.id = lerInteiro(ID_MIN);
     if (p.id == -1) return;
-    
+
     // Ler nome
     printf("Nome do paciente: ");
     lerString(p.nome, 100);
@@ -310,7 +338,7 @@ void cadastrarPaciente(Fila* fila) {
         printf("ERRO: Nome não pode ser vazio.\n");
         return;
     }
-    
+
     // Ler idade
     printf("Idade do paciente: ");
     p.idade = lerInteiro(IDADE_MIN);
@@ -318,7 +346,7 @@ void cadastrarPaciente(Fila* fila) {
         printf("ERRO: Idade deve estar entre %d e %d anos.\n", IDADE_MIN, IDADE_MAX);
         return;
     }
-    
+
     // Ler prioridade
     printf("Prioridade (1-Emergência, 2-Urgência, 3-Normal): ");
     p.prioridade = lerInteiro(EMERGENCIA);
@@ -326,7 +354,7 @@ void cadastrarPaciente(Fila* fila) {
         printf("ERRO: Prioridade deve ser 1, 2 ou 3.\n");
         return;
     }
-    
+
     inserirFila(fila, p);
 }
 
@@ -354,9 +382,9 @@ int desfazerAtendimento(Fila* fila, Pilha* historico) {
 // main
 
 int main() {
-	
+
 	setlocale(LC_ALL, "pt_BR.UTF-8");
-	
+
     Fila fila;
     inicializaFila(&fila);
 
@@ -367,7 +395,7 @@ int main() {
     }
 
     int op;
-    
+
     printf("\n");
     printf("╔════════════════════════════════════════╗\n");
     printf("║   BEM-VINDO AO SISTEMA HOSPITALAR    ║\n");
@@ -404,11 +432,16 @@ int main() {
 				break;
 
             case 4:
+                limparTela();
+                buscarPaciente(&fila);
+                break;
+
+            case 5:
 				limparTela();
                 imprimirFila(&fila);
                 break;
 
-            case 5:
+            case 6:
 				limparTela();
                 imprimirPilha(pilha);
                 break;
