@@ -97,10 +97,136 @@ O sistema oferece um menu interativo com as seguintes opções:
 - Atender paciente conforme prioridade
 - Desfazer o último atendimento
 - Exibir a fila de espera
+- Buscar paciente por ID na fila
 - Exibir o histórico de atendimentos
 - Encerrar o sistema liberando a memória alocada
 
 ---
+## 🧩 Explicação das Funções do Sistema
+
+Esta seção descreve detalhadamente todas as funções implementadas no sistema, explicando sua finalidade e funcionamento.
+
+---
+
+### 🔧 Funções de Inicialização
+
+#### `void inicializaFila(Fila* fila)`
+Inicializa a fila de espera, definindo os ponteiros `inicio` e `fim` como `NULL`.  
+Essa função deve ser chamada antes de qualquer operação na fila, garantindo que ela comece vazia.
+
+---
+
+#### `Pilha* inicializaPilha()`
+Aloca dinamicamente a estrutura da pilha de atendimentos e inicializa o ponteiro `topo` como `NULL`.  
+Retorna um ponteiro para a pilha criada ou `NULL` em caso de erro de alocação.
+
+---
+
+### 👤 Funções de Impressão
+
+#### `void imprimirPaciente(Paciente p)`
+Exibe no terminal todas as informações de um paciente:
+- ID
+- Nome
+- Idade
+- Prioridade  
+
+Essa função é utilizada tanto na impressão da fila quanto da pilha.
+
+---
+
+#### `void imprimirFila(Fila* fila)`
+Percorre a fila de espera do início ao fim, imprimindo os dados de todos os pacientes cadastrados.  
+Caso a fila esteja vazia, informa o usuário.
+
+---
+
+#### `void imprimirPilha(Pilha* p)`
+Exibe o histórico de atendimentos armazenado na pilha, seguindo a ordem **LIFO** (do mais recente para o mais antigo).  
+Caso a pilha esteja vazia, informa o usuário.
+
+---
+
+### ⏳ Funções de Manipulação da Fila
+
+#### `void inserirFila(Fila* fila, Paciente paciente)`
+Insere um novo paciente no final da fila de espera.
+
+Funcionamento:
+- Aloca dinamicamente um novo nó
+- Copia os dados do paciente para o nó
+- Atualiza corretamente os ponteiros `inicio` e `fim`
+
+Essa operação possui complexidade **O(1)**.
+
+---
+
+#### `Paciente removerFila(Fila* fila)`
+Remove o paciente do início da fila, simulando o atendimento.
+
+Funcionamento:
+- Verifica se a fila está vazia
+- Remove o primeiro nó
+- Atualiza o ponteiro `inicio`
+- Ajusta o ponteiro `fim` caso a fila fique vazia
+- Libera a memória do nó removido
+
+Retorna os dados do paciente atendido ou um paciente inválido caso a fila esteja vazia.
+
+---
+
+### 📚 Funções de Manipulação da Pilha
+
+#### `void push(Pilha* p, Paciente paciente)`
+Insere um paciente no topo da pilha de histórico de atendimentos.
+
+Essa função é utilizada logo após um paciente ser atendido, registrando o atendimento realizado.
+
+---
+
+#### `int pop(Pilha* p, Paciente* paciente)`
+Remove o paciente do topo da pilha, permitindo desfazer o último atendimento realizado.
+
+Funcionamento:
+- Verifica se a pilha está vazia
+- Remove o nó do topo
+- Copia os dados para a variável recebida por referência
+- Libera a memória do nó removido
+
+Retorna:
+- `1` se a operação foi bem-sucedida
+- `0` se a pilha estiver vazia
+
+---
+
+### 🔍 Função de Busca
+
+#### `Paciente* buscarPaciente(Fila* fila, int id)`
+Realiza a busca de um paciente na fila de espera com base no **ID**.
+
+Funcionamento:
+- Percorre a lista encadeada sequencialmente
+- Compara o ID informado com o ID de cada paciente
+- Retorna um ponteiro para o paciente caso seja encontrado
+- Retorna `NULL` caso o paciente não exista na fila
+
+A busca possui complexidade **O(n)**, adequada para listas encadeadas.
+
+---
+
+### 🎛️ Função Principal
+
+#### `int main()`
+Responsável por:
+- Inicializar as estruturas do sistema
+- Exibir o menu interativo
+- Controlar o fluxo de execução do programa
+- Chamar as funções de acordo com a opção escolhida pelo usuário
+- Encerrar o sistema liberando corretamente toda a memória alocada
+
+---
+
+Essa organização modular das funções facilita a manutenção, leitura e expansão futura do sistema.
 
 ## 🧪 Regras de Atendimento
 
