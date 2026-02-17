@@ -119,7 +119,7 @@ O sistema oferece um menu interativo com as seguintes opções:
 
 ### Compilação
 ```bash
-gcc sistema_hospitalar.c -o sistema_hospitalar
+gcc SistemaHospitalar.c.c -o SistemaHospitalar.c
 
-sistema_hospitalar.exe (windows)
-./sistema_hospitalar (linux)
+SistemaHospitalar.exe (windows)
+./SistemaHospitalar (linux)
