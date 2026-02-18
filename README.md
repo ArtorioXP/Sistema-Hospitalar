@@ -3,28 +3,29 @@
 
 ## 👥 Integrantes do Grupo
 
-- JOSEPH ANTONY DOS SANTOS LEITE  
-- JOSÉ ARTHUR CALIXTO DA ROCHA COSTA  
-- THEOFILO PINTO DE CARVALHO SOARES ARAUJO  
-- MARIANA DE JESUS SILVA  
+- **JOSEPH ANTONY DOS SANTOS LEITE**  
+- **JOSÉ ARTHUR CALIXTO DA ROCHA COSTA**  
+- **THEOFILO PINTO DE CARVALHO SOARES ARAUJO**  
+- **MARIANA DE JESUS SILVA**
 
 ---
 
 ## 📌 Descrição Geral
 
-Este projeto faz parte do desenvolvimento de um **Sistema de Atendimento Hospitalar**, implementado em linguagem **C**, com o objetivo de demonstrar domínio em **modelagem de dados**, **uso de ponteiros**, **alocação dinâmica de memória** e **implementação manual de estruturas de dados clássicas**.
+Este projeto consiste no desenvolvimento de um **Sistema de Atendimento Hospitalar**, implementado em linguagem **C**, com o objetivo de aplicar e consolidar conhecimentos em **Estruturas de Dados**, **ponteiros**, **alocação dinâmica de memória** e **controle de fluxo por menu interativo**.
 
-O sistema simula o funcionamento de um ambiente hospitalar, permitindo o cadastro de pacientes, organização da fila de espera por prioridade, realização de atendimentos e manutenção de um histórico que possibilita desfazer o último atendimento realizado.
+O sistema simula o funcionamento básico de um hospital, permitindo o cadastro de pacientes, o gerenciamento da fila de espera, a realização de atendimentos, o controle de histórico e a busca por pacientes.
 
 ---
 
 ## 🎯 Objetivos do Projeto
 
 - Aplicar conceitos fundamentais de **Estruturas de Dados**
-- Utilizar **listas encadeadas, filas e pilhas** de forma integrada
-- Trabalhar com **ponteiros e memória dinâmica** em C
-- Desenvolver um sistema funcional com **menu interativo**
+- Utilizar **listas encadeadas, filas e pilhas**
+- Trabalhar com **ponteiros e alocação dinâmica** em C
+- Implementar um **menu interativo com switch-case**
 - Garantir **organização lógica e liberação correta da memória**
+- Simular um sistema real de atendimento hospitalar
 
 ---
 
@@ -32,60 +33,71 @@ O sistema simula o funcionamento de um ambiente hospitalar, permitindo o cadastr
 
 ### 🔗 Lista Encadeada
 
-A lista encadeada foi utilizada para representar a **fila de espera dos pacientes**, pois permite o **crescimento dinâmico da estrutura**, sem a necessidade de definir previamente um tamanho máximo.
+A **lista encadeada** foi utilizada para representar a **fila de espera dos pacientes**, pois permite **crescimento dinâmico**, sem necessidade de tamanho pré-definido.
 
-Cada paciente é armazenado em um nó alocado dinamicamente, possibilitando inserções e remoções eficientes, o que é essencial em um ambiente hospitalar, onde a quantidade de pacientes varia constantemente.
+Vantagens:
+- Inserções e remoções eficientes
+- Uso ideal para dados que variam de quantidade
+- Adequada para sistemas reais como hospitais
+
+Cada paciente é armazenado em um nó alocado dinamicamente.
 
 ---
 
 ### ⏳ Fila
 
-A estrutura de fila modela corretamente o **fluxo de atendimento hospitalar**, respeitando a ordem de chegada dos pacientes, associada ao critério de prioridade.
+A **fila** modela corretamente o **fluxo de atendimento hospitalar**, respeitando a ordem de chegada (**FIFO**).
 
-Características principais:
-- Atendimento baseado em **prioridade** (Emergência, Urgência e Normal)
-- Manutenção da ordem de chegada para pacientes com a mesma prioridade
-- Operações eficientes utilizando ponteiros para o início e o fim da fila
+Características:
+- O primeiro paciente da fila é o primeiro a ser atendido
+- Uso de ponteiros para início e fim
+- Remoção sempre no início da fila
 
-Essa abordagem reflete fielmente o funcionamento real de sistemas de atendimento hospitalar.
+Essa estrutura reflete fielmente o funcionamento de atendimentos reais.
 
 ---
 
 ### 📚 Pilha
 
-A pilha é utilizada para armazenar o **histórico de atendimentos realizados**, sendo adequada para operações do tipo **LIFO (Last In, First Out)**.
+A **pilha** é utilizada para armazenar o **histórico de atendimentos**, sendo adequada para operações do tipo **LIFO (Last In, First Out)**.
 
-Essa estrutura permite:
+Permite:
 - Registrar cada atendimento realizado
 - Desfazer o último atendimento
-- Consultar rapidamente o atendimento mais recente  
-
-A escolha da pilha é justificada pela necessidade de controle e reversão de operações recentes no sistema.
+- Acesso rápido ao atendimento mais recente
 
 ---
 
 ### 🧭 Ponteiros
 
-O uso de ponteiros é essencial para a manipulação das estruturas dinâmicas do sistema. Eles permitem:
+Os **ponteiros** são essenciais para:
+- Ligar os nós das estruturas dinâmicas
+- Passar estruturas para funções
+- Manipular diretamente a memória
 
-- A ligação entre os nós da lista encadeada e da pilha
-- A passagem eficiente de estruturas para funções
-- O controle direto sobre a memória alocada  
-
-O projeto faz uso intensivo de ponteiros, reforçando conceitos fundamentais de **endereçamento, acesso indireto e manipulação de memória** em linguagem C.
+O projeto reforça conceitos fundamentais como **endereçamento**, **acesso indireto** e **estruturação dinâmica**.
 
 ---
 
 ### 🧩 Alocação Dinâmica de Memória
 
-A alocação dinâmica de memória, realizada por meio das funções `malloc` e `free`, garante um **uso eficiente da memória**, alocando espaço apenas quando necessário e liberando-o corretamente ao final do uso.
+A alocação dinâmica, feita com `malloc` e `free`, garante:
+- Uso eficiente da memória
+- Estruturas flexíveis
+- Evita desperdício de espaço
 
-Essa abordagem:
-- Evita desperdício de memória
-- Permite estruturas flexíveis
-- É indispensável em aplicações com dados de tamanho variável  
+Todo nó alocado é corretamente liberado, prevenindo **vazamentos de memória**.
 
-O projeto também se preocupa com a **liberação completa da memória**, prevenindo vazamentos.
+---
+
+### 📊 Array (Relatórios e Estatísticas)
+
+O **array** é utilizado de forma **estática**, exclusivamente para **controle estatístico**, como por exemplo:
+- Quantidade de pacientes atendidos
+- Total de atendimentos realizados
+- Relatórios simples do sistema
+
+👉 O array **não é usado para armazenar pacientes**, pois isso não faria sentido em um sistema dinâmico como este.
 
 ---
 
@@ -94,123 +106,89 @@ O projeto também se preocupa com a **liberação completa da memória**, preven
 O sistema oferece um menu interativo com as seguintes opções:
 
 - Inserir paciente na fila de espera
-- Atender paciente conforme prioridade
+- Atender paciente
 - Desfazer o último atendimento
-- Exibir a fila de espera
-- Buscar paciente por ID na fila
-- Exibir o histórico de atendimentos
-- Encerrar o sistema liberando a memória alocada
+- Exibir fila de espera
+- Buscar paciente por ID
+- Exibir histórico de atendimentos
+- Exibir relatório do sistema
+- Encerrar o sistema liberando a memória
 
 ---
+
 ## 🧩 Explicação das Funções do Sistema
-
-Esta seção descreve detalhadamente todas as funções implementadas no sistema, explicando sua finalidade e funcionamento.
-
----
 
 ### 🔧 Funções de Inicialização
 
 #### `void inicializaFila(Fila* fila)`
-Inicializa a fila de espera, definindo os ponteiros `inicio` e `fim` como `NULL`.  
-Essa função deve ser chamada antes de qualquer operação na fila, garantindo que ela comece vazia.
+Inicializa a fila definindo `inicio` e `fim` como `NULL`.
 
 ---
 
 #### `Pilha* inicializaPilha()`
-Aloca dinamicamente a estrutura da pilha de atendimentos e inicializa o ponteiro `topo` como `NULL`.  
-Retorna um ponteiro para a pilha criada ou `NULL` em caso de erro de alocação.
+Aloca dinamicamente a pilha e inicializa o topo como `NULL`.
 
 ---
 
 ### 👤 Funções de Impressão
 
 #### `void imprimirPaciente(Paciente p)`
-Exibe no terminal todas as informações de um paciente:
-- ID
-- Nome
-- Idade
-- Prioridade  
-
-Essa função é utilizada tanto na impressão da fila quanto da pilha.
+Imprime todas as informações de um paciente.
 
 ---
 
 #### `void imprimirFila(Fila* fila)`
-Percorre a fila de espera do início ao fim, imprimindo os dados de todos os pacientes cadastrados.  
-Caso a fila esteja vazia, informa o usuário.
+Percorre a fila do início ao fim e exibe os pacientes.
 
 ---
 
 #### `void imprimirPilha(Pilha* p)`
-Exibe o histórico de atendimentos armazenado na pilha, seguindo a ordem **LIFO** (do mais recente para o mais antigo).  
-Caso a pilha esteja vazia, informa o usuário.
+Exibe o histórico de atendimentos seguindo a ordem **LIFO**.
 
 ---
 
-### ⏳ Funções de Manipulação da Fila
+### ⏳ Funções da Fila
 
 #### `void inserirFila(Fila* fila, Paciente paciente)`
-Insere um novo paciente no final da fila de espera.
+Insere um paciente no final da fila.
 
-Funcionamento:
-- Aloca dinamicamente um novo nó
-- Copia os dados do paciente para o nó
-- Atualiza corretamente os ponteiros `inicio` e `fim`
-
-Essa operação possui complexidade **O(1)**.
+Complexidade: **O(1)**
 
 ---
 
 #### `Paciente removerFila(Fila* fila)`
-Remove o paciente do início da fila, simulando o atendimento.
+Remove o paciente do início da fila (atendimento).
 
-Funcionamento:
-- Verifica se a fila está vazia
-- Remove o primeiro nó
-- Atualiza o ponteiro `inicio`
-- Ajusta o ponteiro `fim` caso a fila fique vazia
+- Atualiza os ponteiros
 - Libera a memória do nó removido
-
-Retorna os dados do paciente atendido ou um paciente inválido caso a fila esteja vazia.
 
 ---
 
-### 📚 Funções de Manipulação da Pilha
+### 📚 Funções da Pilha
 
 #### `void push(Pilha* p, Paciente paciente)`
-Insere um paciente no topo da pilha de histórico de atendimentos.
-
-Essa função é utilizada logo após um paciente ser atendido, registrando o atendimento realizado.
+Registra um atendimento no topo da pilha.
 
 ---
 
 #### `int pop(Pilha* p, Paciente* paciente)`
-Remove o paciente do topo da pilha, permitindo desfazer o último atendimento realizado.
-
-Funcionamento:
-- Verifica se a pilha está vazia
-- Remove o nó do topo
-- Copia os dados para a variável recebida por referência
-- Libera a memória do nó removido
+Remove o último atendimento realizado.
 
 Retorna:
-- `1` se a operação foi bem-sucedida
-- `0` se a pilha estiver vazia
+- `1` → sucesso  
+- `0` → pilha vazia  
 
 ---
 
 ### 🔍 Função de Busca
 
 #### `Paciente* buscarPaciente(Fila* fila, int id)`
-Realiza a busca de um paciente na fila de espera com base no **ID**.
+Busca um paciente na fila pelo **ID**.
 
-Funcionamento:
-- Percorre a lista encadeada sequencialmente
-- Compara o ID informado com o ID de cada paciente
-- Retorna um ponteiro para o paciente caso seja encontrado
-- Retorna `NULL` caso o paciente não exista na fila
+- Retorna o ponteiro do paciente se encontrado
+- Retorna `NULL` caso não exista
 
-A busca possui complexidade **O(n)**, adequada para listas encadeadas.
+Complexidade: **O(n)**
 
 ---
 
@@ -218,26 +196,19 @@ A busca possui complexidade **O(n)**, adequada para listas encadeadas.
 
 #### `int main()`
 Responsável por:
-- Inicializar as estruturas do sistema
-- Exibir o menu interativo
-- Controlar o fluxo de execução do programa
-- Chamar as funções de acordo com a opção escolhida pelo usuário
-- Encerrar o sistema liberando corretamente toda a memória alocada
+- Inicializar estruturas
+- Controlar o menu com `switch-case`
+- Chamar as funções do sistema
+- Encerrar o programa corretamente
 
 ---
 
-Essa organização modular das funções facilita a manutenção, leitura e expansão futura do sistema.
-
 ## 🧪 Regras de Atendimento
 
-- Prioridades:
-  - **1** – Emergência  
-  - **2** – Urgência  
-  - **3** – Normal  
-
-- Pacientes com maior prioridade são atendidos primeiro
-- Em caso de empate na prioridade, mantém-se a ordem de chegada
-- O histórico de atendimentos segue a lógica **LIFO**
+- Atendimento segue **FIFO**
+- Primeiro a chegar é o primeiro a ser atendido
+- Histórico segue **LIFO**
+- Busca feita por **ID único**
 
 ---
 
@@ -245,7 +216,4 @@ Essa organização modular das funções facilita a manutenção, leitura e expa
 
 ### Compilação
 ```bash
-gcc SistemaHospitalar.c.c -o SistemaHospitalar.c
-
-SistemaHospitalar.exe (windows)
-./SistemaHospitalar (linux)
+gcc SistemaHospitalar.c -o SistemaHospitalar
