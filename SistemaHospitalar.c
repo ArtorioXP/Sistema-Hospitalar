@@ -43,6 +43,8 @@ typedef struct {
     NoPilha* topo;
 } Pilha;
 
+int estatisticas[3] = {0, 0, 0}; // Índices: 0=Cadastrados, 1=Atendidos, 2=Desfeitos
+
 /* Funções auxiliares de validação */
 int validarPrioridade(int prioridade) {
     return (prioridade >= EMERGENCIA && prioridade <= NORMAL);
@@ -119,6 +121,15 @@ void imprimirPilha(Pilha* p) {
         imprimirPaciente(atual->dados);
         atual = atual->prox;
     }
+}
+
+// Função para exibir relatório de contadores
+void exibirRelatorio() {
+    printf("RELATÓRIO DE PACIENTES\n");
+    printf("Total de Pacientes Cadastrados: %d\n", estatisticas[0]);
+    printf("Total de Pacientes Atendidos: %d\n", estatisticas[1]);
+    printf("Total de Pacientes Desfeitos: %d\n", estatisticas[2]);
+    printf("Pacientes em Espera (Fila): %d\n", estatisticas[0] - estatisticas[1]);
 }
 
 void limparTela(){
@@ -285,6 +296,7 @@ void menu() {
     printf("4 - Buscar paciente por ID\n");
     printf("5 - Mostrar fila de espera\n");
     printf("6 - Mostrar histórico de atendimentos\n");
+    printf("7 - Exibir relatório do sistema\n");
     printf("0 - Sair\n");
     printf("Escolha: ");
 }
@@ -356,6 +368,9 @@ void cadastrarPaciente(Fila* fila) {
     }
 
     inserirFila(fila, p);
+    
+    // Incrementa o contador de pacientes cadastrados
+    estatisticas[0]++;
 }
 
 int desfazerAtendimento(Fila* fila, Pilha* historico) {
@@ -374,6 +389,10 @@ int desfazerAtendimento(Fila* fila, Pilha* historico) {
     inserirFila(fila, pacienteDesfeito);
 
     printf("Atendimento de %s desfeito com sucesso.\n", pacienteDesfeito.nome);
+
+    // Atualiza contadores
+    estatisticas[1]--;
+    estatisticas[2]++;
 
     return 1;
 }
@@ -398,14 +417,14 @@ int main() {
 
     printf("\n");
     printf("╔════════════════════════════════════════╗\n");
-    printf("║   BEM-VINDO AO SISTEMA HOSPITALAR    ║\n");
+    printf("║     BEM-VINDO AO SISTEMA HOSPITALAR    ║\n");
     printf("╚════════════════════════════════════════╝\n");
 
     do {
         menu();
         op = lerInteiro(0);
         if (op == -1) {
-            printf("Digite uma opção válida (0-4).\n");
+            printf("Digite uma opção válida (0-7).\n");
             continue;
         }
 
@@ -422,13 +441,15 @@ int main() {
                     push(pilha, atendido);
                     printf("\n✓ PACIENTE ATENDIDO:\n");
                     imprimirPaciente(atendido);
+                    
+                    // Incrementa contador de atendidos
+                    estatisticas[1]++;
                 }
                 break;
             }
-
             case 3:
 				limparTela();
-				desfazerAtendimento(&fila,pilha);
+				desfazerAtendimento(&fila, pilha);
 				break;
 
             case 4:
@@ -446,6 +467,11 @@ int main() {
                 imprimirPilha(pilha);
                 break;
 
+            case 7:
+                limparTela();
+                exibirRelatorio();
+                break;
+
             case 0:
                 printf("\nEncerrando sistema...\n");
                 printf("Limpando memória...\n");
@@ -455,7 +481,7 @@ int main() {
                 break;
 
             default:
-                printf("ERRO: Opção inválida. Escolha entre 0 e 4.\n");
+                printf("ERRO: Opção inválida. Escolha entre 0 e 7.\n");
         }
 
     } while (op != 0);
