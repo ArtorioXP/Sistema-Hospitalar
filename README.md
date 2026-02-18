@@ -217,3 +217,8 @@ Responsável por:
 ### Compilação
 ```bash
 gcc SistemaHospitalar.c -o SistemaHospitalar
+
+SistemaHospitalar.exe (windows)
+
+./SistemaHospitalar (linux/mac)
+
