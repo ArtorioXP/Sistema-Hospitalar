@@ -109,7 +109,7 @@ Pilha* inicializaPilha() {
 
 // Imprime os dados de um único paciente de forma formatada
 void imprimirPaciente(Paciente p){
-	printf("ID: %d\n", p.id);
+	printf("\nID: %d\n", p.id);
 	printf("NOME: %s\n", p.nome);
 	printf("IDADE: %d anos\n", p.idade);
 	printf("PRIORIDADE: %s (%d)\n", obterNomePrioridade(p.prioridade), p.prioridade);
